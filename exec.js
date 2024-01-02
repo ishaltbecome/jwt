@@ -1,3 +1,11 @@
 const sequelize = require('./sequelize')
 
-sequelize.sync()
+const models = require('./models')
+
+// sequelize.sync()
+
+// models.Role.sync()
+
+// models.Role.create({
+//   roleName: 'admin'
+// })

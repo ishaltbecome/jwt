@@ -1,0 +1,52 @@
+<%- include('partials/header') %>
+
+<form>
+  <input type="text" id="role-name" name="roleName" placeholder="Название роли">
+  <button type="submit">Добавить</button>
+</form>
+
+<table>
+  <thead>
+    <tr>
+      <th>ID</th>
+      <th>Название роли</th>
+    </tr>
+  </thead>
+  <tbody>
+    <% roles.forEach(role => { %>
+      <tr>
+        <td><%= role.id %></td>
+        <td><%= role.roleName %></td>
+        <td><a href="/roles/<%= role.id %>" class="delete-record">Удалить</a></td>
+      </tr>
+    <% }) %>
+  </tbody>
+</table>
+
+<%- include('partials/footer') %>
+
+<script>
+  const form = document.querySelector('form')
+
+  form.addEventListener('submit', event => {
+    event.preventDefault()
+
+    const formData = new FormData(form)
+
+    axios.post('/roles', Object.fromEntries(formData))
+
+    location.reload()
+  })
+
+  const deleteRecords = document.querySelectorAll('.delete-record')
+
+  deleteRecords.forEach(deleteRecord => {
+    deleteRecord.addEventListener('click', event => {
+      event.preventDefault()
+
+      axios.delete(deleteRecord.pathname)
+
+      location.reload()
+    })
+  })
+</script>
