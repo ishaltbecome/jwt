@@ -1,0 +1,16 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title><%= title %></title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <div id="wrapper">
+    <header class="row">
+      <h3><%= title %></h3>
+      <a href="/login">Вход</a>
+    </header>
+    <main class="row">
+      <%- include('menu') %>
+      <section id="content">
