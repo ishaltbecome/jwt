@@ -1,5 +1,62 @@
 <%- include('partials/header') %>
 
-<h1>Hello</h1>
+<form>
+  <input type="text" id="input-login" name="login" placeholder="Логин">
+  <input type="text" id="input-password" name="password" placeholder="Пароль">
+  <select id="input-roleid" name="roleId" >
+    <% roles.forEach(role => { %>
+      <option value="<%= role.id %>"><%= role.roleName %></option>
+    <% }) %>
+  </select>
+  <button type="submit">Добавить</button>
+</form>
+
+<table>
+  <thead>
+    <tr>
+      <th>ID</th>
+      <th>LOGIN</th>
+      <th>PASSWORD</th>
+      <th>ROLEID</th>
+    </tr>
+  </thead>
+  <tbody>
+    <% users.forEach(user => { %>
+      <tr>
+        <td><%= user.id %></td>
+        <td><%= user.login %></td>
+        <td><%= user.password %></td>
+        <td><%= user.role.roleName %></td>
+        <td><a href="/users/<%= user.id %>" class="delete-record">Удалить</a></td>
+      </tr>
+    <% }) %>
+  </tbody>
+</table>
 
 <%- include('partials/footer') %>
+
+<script>
+  const form = document.querySelector('form')
+
+  form.addEventListener('submit', event => {
+    event.preventDefault()
+
+    const formData = new FormData(form)
+
+    axios.post('/users', Object.fromEntries(formData))
+
+    location.reload()
+  })
+
+  const deleteRecords = document.querySelectorAll('.delete-record')
+
+  deleteRecords.forEach(deleteRecord => {
+    deleteRecord.addEventListener('click', event => {
+      event.preventDefault()
+
+      axios.delete(deleteRecord.pathname)
+
+      location.reload()
+    })
+  })
+</script>

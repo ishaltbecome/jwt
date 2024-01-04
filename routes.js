@@ -35,4 +35,36 @@ router.delete('/roles/:id', async (req, res) => {
   }
 })
 
+router.route('/users')
+  .get(async (req, res) => {
+    try {
+      const users = await models.User.findAll({ include: models.Role })
+      const roles = await models.Role.findAll()
+      res.render('users', { title: 'Пользователи', users, roles })
+    } catch (err) {
+      console.log(err)
+      res.json(err)
+    }
+  })
+
+  .post(async (req, res) => {
+    try {
+      await models.User.create(req.body)      
+    } catch (err) {
+      console.log(err)
+      res.json(err)
+    }
+  })
+
+router.delete('/users/:id', async (req, res) => {
+  try {
+    await models.User.destroy({ where: { id: req.params.id } })
+  } catch (err) {
+    console.log(err)
+    res.json(err)
+  }
+})
+
+models.User.belongsTo(models.Role)
+
 module.exports = router
