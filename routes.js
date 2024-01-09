@@ -6,6 +6,15 @@ router.get('/', (req, res) => {
   res.render('index', { title: 'Index' })
 })
 
+router.route('/login')
+  .get((req, res) => {
+    res.render('login', { title: 'Авторизация' })
+  })
+
+  .post((req, res) => {
+    // TODO
+  })
+
 router.route('/roles')
   .get(async (req, res) => {
     try {
