@@ -3,6 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <title><%= title %></title>
+  <script src="https://unpkg.com/axios@1.1.2/dist/axios.min.js"></script>
 </head>
 <body>
   <form>
@@ -10,5 +11,18 @@
     <input type="text" id="input-password" name="password" placeholder="Пароль">
     <button type="submit">Войти</button>
   </form>
+
+  <script>
+    const form = document.querySelector('form')
+
+    form.addEventListener('submit', (event) => {
+      event.preventDefault()
+
+      const login = document.querySelector('#input-login').value
+      const password = document.querySelector('#input-password').value
+
+      axios.post('/login', { login, password })
+    })
+  </script>
 </body>
 </html>

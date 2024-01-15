@@ -32,7 +32,7 @@ exports.User = sequelize.define('user', {
   timestamps: false,
   tableName: 'users',
   hooks: {
-    beforeCreate: async (user) => {
+    beforeSave: async (user) => {
       user.password = await bcrypt.hash(user.password, 10)
     }
   }

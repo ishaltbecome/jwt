@@ -1,3 +1,5 @@
+const bcrypt = require('bcrypt')
+
 const router = require('express').Router()
 
 const models = require('./models')
@@ -11,8 +13,14 @@ router.route('/login')
     res.render('login', { title: 'Авторизация' })
   })
 
-  .post((req, res) => {
-    // TODO
+  .post(async (req, res) => {
+    try {
+      const user = await models.User.findOne({ where: { login: req.body.login } })
+      console.log(user.dataValues);
+    } catch (err) {
+      res.json(err)
+      console.log('пользователь не найден');
+    }
   })
 
 router.route('/roles')
